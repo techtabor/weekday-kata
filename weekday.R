@@ -12,7 +12,18 @@ numDaysBetween <- function(year, month, day, reference_date) {
 }
 
 getYearDistanceInDays <- function(year, reference_year) {
-    365 * (year - reference_year)
+    year_distance <- 365 * (year - reference_year)
+    if (year == reference_year) {
+        return (year_distance)
+    } else if (year > reference_year) {
+        return(year_distance + countLeapYearsInInterval(reference_year, year))
+    } else if (year < reference_year) {
+        return(year_distance -countLeapYearsInInterval(year, reference_year))
+    }
+}
+
+countLeapYearsInInterval <- function(start_year, end_year) {
+    (end_year - start_year) %/% 4
 }
 
 getMonthDistanceInDays <- function(month, reference_month) {
@@ -69,3 +80,6 @@ stopifnot(weekdayOfDate(2018, 1, 6) == "Saturday")
 
 # next year
 stopifnot(weekdayOfDate(2019, 1, 1) == "Tuesday")
+
+# simple leap year
+stopifnot(weekdayOfDate(2023, 1, 1) == "Sunday")
