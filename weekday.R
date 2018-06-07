@@ -13,34 +13,25 @@ numDaysBetween <- function(year, month, day, reference_date) {
 
 getYearDistanceInDays <- function(year, reference_year) {
     year_distance <- 365 * (year - reference_year)
-    if (year == reference_year) {
-        return (year_distance)
-    } else if (year > reference_year) {
-        return(year_distance + countLeapYearsInInterval(reference_year, year))
-    } else if (year < reference_year) {
-        return(year_distance -countLeapYearsInInterval(year, reference_year))
-    }
+    leap_days <- countLeapYearsInInterval(year, reference_year)
+    year_distance + sign(year - reference_year) * leap_days
 }
 
-countLeapYearsInInterval <- function(start_year, end_year) {
-    years <- start_year : (end_year - 1)
+countLeapYearsInInterval <- function(year, reference_year) {
+    years <- min(year, reference_year) : (max(year, reference_year) - 1)
     leap_years <- years[years %% 4 == 0 & (years %% 100 != 0 | years %% 400 == 0)]
     length(leap_years)
 }
 
 getMonthDistanceInDays <- function(month, reference_month) {
-    if (month == reference_month) {
-        return(0)
-    } else if (month > reference_month) {
-        totalDaysBetweenMonths(reference_month, month)
-    } else {
-        - totalDaysBetweenMonths(month, reference_month)
-    }
+    sign(month - reference_month) * totalDaysBetweenMonths(month, reference_month)
 }
 
-totalDaysBetweenMonths <- function(start_index, end_index) {
+totalDaysBetweenMonths <- function(month, reference_month) {
     month_lengths <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-    sum(month_lengths[start_index : (end_index - 1)])
+    first_month_index <- min(month, reference_month)
+    last_month_index <- max(month, reference_month) - 1
+    sum(month_lengths[first_month_index : last_month_index])
 }
 
 getDayDistanceInDays <- function(day, reference_day) {
