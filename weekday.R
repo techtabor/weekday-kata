@@ -1,6 +1,7 @@
 weekdayOfDate <- function(year, month, day) {
-    index_of_a_last_day_of_week <- 3
-    nameOfDayWithIndex((day - index_of_a_last_day_of_week) %% 7)
+    a_sunday <- c("year" = 2018, "month" = 6, "day" = 3)
+    num_days_from_a_sunday <- day - a_sunday[["day"]]
+    nameOfDayWithIndex(num_days_from_a_sunday %% 7)
 }
 
 nameOfDayWithIndex <- function(index_in_week) {
