@@ -1,7 +1,22 @@
 weekdayOfDate <- function(year, month, day) {
     a_sunday <- c("year" = 2018, "month" = 6, "day" = 3)
-    num_days_from_a_sunday <- day - a_sunday[["day"]]
+    num_days_from_a_sunday <- numDaysBetween(month, day, a_sunday)
     nameOfDayWithIndex(num_days_from_a_sunday %% 7)
+}
+
+numDaysBetween <- function(month, day, reference_date) {
+    month_distance <- getMonthDistanceInDays(month, reference_date)
+    day_distance <- getDayDistanceInDays(day, reference_date)
+    month_distance + day_distance
+}
+
+getDayDistanceInDays <- function(day, reference_date) {
+    day - reference_date[["day"]]
+}
+
+getMonthDistanceInDays <- function(month, reference_date) {
+    month_distance <- month - reference_date[["month"]]
+    c(0, 30, 61)[month_distance + 1]
 }
 
 nameOfDayWithIndex <- function(index_in_week) {
@@ -12,8 +27,10 @@ nameOfDayWithIndex <- function(index_in_week) {
     weekday_names[index_in_week]
 }
 
+# today
 stopifnot(weekdayOfDate(2018, 6, 7) == "Thursday")
 
+# this week
 stopifnot(weekdayOfDate(2018, 6, 4) == "Monday")
 stopifnot(weekdayOfDate(2018, 6, 5) == "Tuesday")
 stopifnot(weekdayOfDate(2018, 6, 6) == "Wednesday")
@@ -21,7 +38,13 @@ stopifnot(weekdayOfDate(2018, 6, 8) == "Friday")
 stopifnot(weekdayOfDate(2018, 6, 9) == "Saturday")
 stopifnot(weekdayOfDate(2018, 6, 10) == "Sunday")
 
+# this month
 stopifnot(weekdayOfDate(2018, 6, 1) == "Friday")
 stopifnot(weekdayOfDate(2018, 6, 30) == "Saturday")
+
+# this summer
+stopifnot(weekdayOfDate(2018, 7, 1) == "Sunday")
+stopifnot(weekdayOfDate(2018, 7, 18) == "Wednesday")
+
 
 
