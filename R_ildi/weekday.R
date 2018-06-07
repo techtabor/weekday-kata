@@ -82,3 +82,5 @@ stopifnot(weekdayOfDate(2123, 1, 1) == "Friday")
 
 # years divisible by 400 are leap years
 stopifnot(weekdayOfDate(1975, 1, 1) == "Wednesday")
+
+# handle if you are within leap year
