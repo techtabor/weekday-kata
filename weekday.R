@@ -23,7 +23,9 @@ getYearDistanceInDays <- function(year, reference_year) {
 }
 
 countLeapYearsInInterval <- function(start_year, end_year) {
-    (end_year - start_year) %/% 4
+    years <- start_year : (end_year - 1)
+    leap_years <- years[years %% 4 == 0 & (years %% 100 != 0 | years %% 400 == 0)]
+    length(leap_years)
 }
 
 getMonthDistanceInDays <- function(month, reference_month) {
@@ -83,3 +85,9 @@ stopifnot(weekdayOfDate(2019, 1, 1) == "Tuesday")
 
 # simple leap year
 stopifnot(weekdayOfDate(2023, 1, 1) == "Sunday")
+
+# years divisible by 100 are not leap years
+stopifnot(weekdayOfDate(2123, 1, 1) == "Friday")
+
+# years divisible by 400 are leap years
+stopifnot(weekdayOfDate(1975, 1, 1) == "Wednesday")
