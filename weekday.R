@@ -10,13 +10,24 @@ numDaysBetween <- function(month, day, reference_date) {
     month_distance + day_distance
 }
 
+getMonthDistanceInDays <- function(month, reference_date) {
+    reference_month <- reference_date[["month"]]
+    if (month == reference_month) {
+        return(0)
+    } else if (month > reference_month) {
+        totalDaysBetweenMonths(reference_month, month)
+    } else {
+        - totalDaysBetweenMonths(month, reference_month)
+    }
+}
+
 getDayDistanceInDays <- function(day, reference_date) {
     day - reference_date[["day"]]
 }
 
-getMonthDistanceInDays <- function(month, reference_date) {
-    month_distance <- month - reference_date[["month"]]
-    c(0, 30, 61)[month_distance + 1]
+totalDaysBetweenMonths <- function(start_index, end_index) {
+    month_lengths <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    sum(month_lengths[start_index : (end_index - 1)])
 }
 
 nameOfDayWithIndex <- function(index_in_week) {
@@ -46,5 +57,9 @@ stopifnot(weekdayOfDate(2018, 6, 30) == "Saturday")
 stopifnot(weekdayOfDate(2018, 7, 1) == "Sunday")
 stopifnot(weekdayOfDate(2018, 7, 18) == "Wednesday")
 
-
+# this year
+stopifnot(weekdayOfDate(2018, 12, 31) == "Monday")
+stopifnot(weekdayOfDate(2018, 1, 1) == "Monday")
+stopifnot(weekdayOfDate(2018, 12, 1) == "Saturday")
+stopifnot(weekdayOfDate(2018, 1, 6) == "Saturday")
 
