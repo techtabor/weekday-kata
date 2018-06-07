@@ -1,9 +1,13 @@
 weekdayOfDate <- function(year, month, day) {
+    nameOfDayWithIndex(day - 3)
+}
+
+nameOfDayWithIndex <- function(index_in_week) {
     weekdays <- c(
         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
         "Saturday", "Sunday"
     )
-    weekdays[day - 3]
+    weekdays[index_in_week]
 }
 
 stopifnot(weekdayOfDate(2018, 6, 7) == "Thursday")
